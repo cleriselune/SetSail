@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainUIStyle.uss?fileID=7433441132597879392&amp;guid=dbd10afa3174f5448b03e35b6e5cddf6&amp;type=3#MainUIStyle"/>
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label text="Label" name="SailRotation" class="header"/>
+        <ui:Label text="Label" name="SailOpening" class="header"/>
+    </ui:VisualElement>
+</ui:UXML>
