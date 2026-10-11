@@ -17,6 +17,8 @@ public class SailsMovement : MonoBehaviour
     public float rotationRate = 20f;
     float maxLeftRotation = -45f;
     float maxRightRotation = 45f;
+    Transform sailObject;
+    Quaternion localRotationSail;
 
     private InputAction moveInput;
 
@@ -24,6 +26,8 @@ public class SailsMovement : MonoBehaviour
     void Start()
     {
         moveInput = InputSystem.actions.FindAction("Move");
+        sailObject = transform.Find("Sail");
+        localRotationSail = sailObject.localRotation;
     }
 
     // Update is called once per frame
@@ -58,7 +62,9 @@ public class SailsMovement : MonoBehaviour
         sailsRotation = Mathf.Clamp(sailsRotation, maxLeftRotation, maxRightRotation);
         Debug.Log($"sailsrotation: {sailsRotation}*");
 
-        transform.Rotate(0f, sailsRotation * Time.deltaTime, 0f);
+        // sailObject.Rotate(0f, 0f, sailsRotation * Time.deltaTime);
+        sailObject.rotation = localRotationSail * Quaternion.Euler(0f, 0f, sailsRotation);
+
     }
 
     public float GetSailsOpening()
