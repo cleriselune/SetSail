@@ -23,7 +23,7 @@ public class SailsMovement : MonoBehaviour
 
     // WIND
     public Transform windTransform; // empty gameobject from the inspector
-    [SerializeField] float windStrength = 5f;
+    [SerializeField] float windStrength = 10f;
 
     // the resistance force that water and air exert against the craft as it moves forward, slowing it down
     public float dragCoeff = 0.5f;
@@ -112,13 +112,9 @@ public class SailsMovement : MonoBehaviour
 
     void HandleSteering(float steerAxis)
     {
-        // so it won't move when the ship is still
-        if (currentSpeed > 0) 
-        {
-            // q e moves the ship left right-> to test the wind :]
-            float rotationAmount = steerAxis * steerRate * currentSpeed * Time.deltaTime;
-            transform.Rotate(0f, rotationAmount, 0f, Space.World);
-        }
+        // q e moves the ship left right-> to test the wind :]
+        float rotationAmount = steerAxis * steerRate * currentSpeed * Time.deltaTime;
+        transform.Rotate(0f, rotationAmount, 0f, Space.World);
     }
 
     public float GetSailsOpening()

@@ -2,6 +2,9 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+# unity asset pack of water https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-urp-191449
+IgniteCoders
+
 .utmp/
 /[Ll]ibrary/
 /[Tt]emp/
