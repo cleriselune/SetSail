@@ -3,15 +3,13 @@ using UnityEngine.InputSystem;
 
 public class SailsMovement : MonoBehaviour
 {
-    Vector2 moveVector;
-
-    float currentSpeed = 0f;
-
+    // [SAILS OPENING VARIABLES]
     private float sailsOpen = 0f; // % percentage
     public float openingRate = 20f;
     float minOpening = 0f;
     float maxOpening = 100f;
 
+    // [SAILS ROTATION VARIABLES]
     private float sailsRotation = 0f; // * degree
     public float rotationRate = 20f;
     float maxLeftRotation = -45f;
@@ -19,19 +17,23 @@ public class SailsMovement : MonoBehaviour
     Transform sailObject;
     Quaternion localRotationSail;
 
+    // [MOVE RELATED VARIABLES]
+    private Vector2 moveVector;
+    private float steerAxis; // since it's q/e it's and axis
+    private float currentSpeed = 0f;
     private InputAction moveInput;
+    private InputAction steerInput;
 
-    // WIND
+    // [WIND VARIABLES]
     public Transform windTransform; // empty gameobject from the inspector
     [SerializeField] float windStrength = 10f;
 
+    // [DRAGGING VARIABLE]
     // the resistance force that water and air exert against the craft as it moves forward, slowing it down
     public float dragCoeff = 0.5f;
 
-    // STEERING
+    // [STEERING VARIABLE]
     public float steerRate = 5f;
-    InputAction steerInput;
-    float steerAxis;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -63,10 +65,9 @@ public class SailsMovement : MonoBehaviour
 
     }
 
+    // all the logic behind actually going forward
     float CalculatePropulsion()
     {
-        // all the logic behind actually going forward
-
         float openCoeff = sailsOpen / maxOpening; // (0-1)
 
         Vector3 sailRight = sailObject.up; // local sail axis that is perpendicular to the wind forward (to simulate wind blowing on it)
@@ -79,11 +80,13 @@ public class SailsMovement : MonoBehaviour
         return propulsion;
     }
 
+    // logic behind ship resistance (dragging)
     float CalculateResistance()
     {
         return dragCoeff * currentSpeed * currentSpeed; // so the drag will be more the more the ship accelerates
     }
 
+    // input for opening sails [W, S]
     void HandleOpeningSails(Vector2 moveVector)
     {
         // moveVector.y -> W, S
@@ -97,6 +100,7 @@ public class SailsMovement : MonoBehaviour
         //Debug.Log($"actual speed: {actualSpeed}");
     }
 
+    // input for rotating the sail [A, D]
     void HandleRotatingSails(Vector2 moveVector)
     {
         // moveVector.x -> A, D
@@ -110,13 +114,14 @@ public class SailsMovement : MonoBehaviour
 
     }
 
+    // input for rotating the ship [Q, E] for testing wind
     void HandleSteering(float steerAxis)
     {
-        // q e moves the ship left right-> to test the wind :]
         float rotationAmount = steerAxis * steerRate * currentSpeed * Time.deltaTime;
         transform.Rotate(0f, rotationAmount, 0f, Space.World);
     }
 
+    // getters for UILabels
     public float GetSailsOpening()
     {
         return sailsOpen;
