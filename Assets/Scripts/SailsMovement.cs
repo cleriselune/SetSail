@@ -23,13 +23,13 @@ public class SailsMovement : MonoBehaviour
 
     // WIND
     public Transform windTransform; // empty gameobject from the inspector
-    [SerializeField] float windStrength = 20f;
+    [SerializeField] float windStrength = 5f;
 
     // the resistance force that water and air exert against the craft as it moves forward, slowing it down
     public float dragCoeff = 0.5f;
 
     // STEERING
-    public float steerRate = 20f;
+    public float steerRate = 5f;
     InputAction steerInput;
     float steerAxis;
 
@@ -54,11 +54,13 @@ public class SailsMovement : MonoBehaviour
 
         float propulsion = CalculatePropulsion();
         float resistance = CalculateResistance();
-        currentSpeed = propulsion - resistance * currentSpeed * Time.deltaTime;
-        currentSpeed = Mathf.Max(currentSpeed, 0f); // so the ship wont go backwards.........
+
+        currentSpeed += (Mathf.Max(propulsion, 0f) - resistance) * Time.deltaTime;
+
         Debug.Log($"current speeeed: {currentSpeed}");
 
         transform.position += transform.forward * currentSpeed * Time.deltaTime;
+
     }
 
     float CalculatePropulsion()
@@ -79,7 +81,7 @@ public class SailsMovement : MonoBehaviour
 
     float CalculateResistance()
     {
-        return 0; //for now TODO()
+        return dragCoeff * currentSpeed * currentSpeed; // so the drag will be more the more the ship accelerates
     }
 
     void HandleOpeningSails(Vector2 moveVector)
@@ -110,9 +112,13 @@ public class SailsMovement : MonoBehaviour
 
     void HandleSteering(float steerAxis)
     {
-        // q e moves the ship left right-> to test the wind :]
-        float rotationAmount = steerAxis * steerRate * Time.deltaTime;
-        transform.Rotate(0f, rotationAmount, 0f, Space.World);
+        // so it won't move when the ship is still
+        if (currentSpeed > 0) 
+        {
+            // q e moves the ship left right-> to test the wind :]
+            float rotationAmount = steerAxis * steerRate * currentSpeed * Time.deltaTime;
+            transform.Rotate(0f, rotationAmount, 0f, Space.World);
+        }
     }
 
     public float GetSailsOpening()
