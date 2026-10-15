@@ -26,6 +26,10 @@ DRAG MECHANIC:
 STEER MECHANIC:
 - added steer mechanic (Q/E) to test the behaviour of the speed to the wind :]
 
+ASSETS:
+- water shader assset (NEEDED LICENSE, not commited here): [WATER SHADER URP](https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-urp-191449)
+- ship (public domain, prefab included): [LOW POLY VIKING SHIP](https://glory-asset.itch.io/low-poly-viking-ship)
+  
 TECHNICAL DETAILS:
 - all UI elements are created in UIToolkit
 - new input system
